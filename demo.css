@@ -1,0 +1,307 @@
+@layer base, layout, components, utilities;
+/* montserrat-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 800;
+  src: url("/Fonts/montserrat-v31-latin/montserrat-v31-latin-800.woff2")
+    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* lato-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/Fonts/lato-v25-latin/lato-v25-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+@layer base {
+  :root {
+    /* Color Palette */
+    --color-primary: hsl(140 28% 34%); /* #245173 */
+    --color-secondary: hsl(8.7 100% 88%); /* #34bcc3 */
+    --color-accent: hsl(120 20% 82%); /* #C8DBC8 */
+    --color-black: hsl(none 0% 20%);
+    --color-white: hsl(none 0% 98%); /* #f8fafc */
+    /* Color Palette */
+
+    /* Spacing Scale */
+    --space-0: 0;
+    --space-1: 0.25rem; /* 4px */
+    --space-2: 0.5rem; /* 8px */
+    --space-3: 0.75rem; /* 12px */
+    --space-4: 1rem; /* 16px */
+    --space-5: 1.25rem; /* 20px */
+    --space-6: 1.5rem; /* 24px */
+    --space-8: 2rem; /* 32px */
+    --space-12: 3rem; /* 48px */
+    --space-20: 5rem; /* 80px */
+    /* Spacing Scale */
+    /* Font Sizes — fluid clamp() scale */
+    --font-family: "Lato";
+    --ff-header: "Montserrat";
+    --fw-bold: 700;
+    --fw-vbold: 800;
+    --fs-xsmall: clamp(0.475rem, 0.4rem + 0.25vw, 0.85rem);
+    --fs-small: clamp(0.875rem, 0.8rem + 0.35vw, 1rem); /* 14px → 16px */
+    --fs-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px → 18px */
+    --fs-medium: clamp(1.125rem, 1rem + 0.75vw, 1.5rem); /* 18px → 24px */
+    --fs-large: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem); /* 24px → 36px */
+    --fs-xlarge: clamp(2rem, 1.2rem + 2.5vw, 3.5rem); /* 32px → 56px */
+
+    /* Font Sizes — fluid clamp() scale */
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-secondary);
+    box-sizing: border-box;
+    padding: 0;
+  }
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+    hanging-punctuation: first last;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  body {
+    margin: 0 auto;
+    font-family: var(--font-family);
+    font-size: var(--fs-base);
+    line-height: 1.5;
+    color: var(--color-black);
+    height: 100svh;
+    background-color: var(--color-white);
+    scrollbar-gutter: stable;
+  }
+
+  p {
+    font-size: var(--fs-small);
+    font-family: var(--font-family);
+    text-wrap: pretty;
+  }
+  :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--ff-header);
+    line-height: 1.2;
+    color: var(--color-black);
+    padding: var(--space-1) 0;
+  }
+  figure > :is(img, picture, video, canvas, svg) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--br-m);
+  }
+}
+
+@layer layout {
+  section {
+    padding-block: min(10vh, var(--space-20));
+  }
+  /*Container Classes*/
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .container-fluid-flex {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: var(--space-8);
+    @media (width <=769px) {
+      display: flex;
+      flex-direction: column;
+    }
+    /*Container Classes*/
+  }
+}
+
+@layer components {
+  .card__grid {
+    container: cardgrid/ inline-size;
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
+  }
+
+  /*Card Image Column*/
+  .card {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    border-radius: var(--space-2);
+    background-color: var(--color-white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    @media (width <=769px) {
+      display: flex;
+      flex-direction: column;
+    }
+    .card__body {
+      color: var(--color-black);
+      padding: var(--space-4);
+      width: 100%;
+    }
+    .card__copy {
+      margin-block: var(--space-2);
+      width: 100%;
+    }
+    .card__image {
+      width: 100%;
+      height: 210px;
+      display: block;
+      object-fit: cover;
+      border-radius: var(--space-2) var(--space-2) 0 0;
+      @media (width <=769px) {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  /*Card Image/Text Column*/
+
+  /*Card Image/Text Row*/
+  .card__base {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-radius: var(--space-2);
+    background-color: var(--color-white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    @media (width <=769px) {
+      display: flex;
+      flex-direction: column;
+    }
+    .card__body {
+      color: var(--color-black);
+      padding: var(--space-4);
+      width: 100%;
+    }
+    .card__copy {
+      margin-block: var(--space-2);
+    }
+    .card__image {
+      width: 375px;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: var(--space-2) var(--space-2) 0 0;
+      @media (width <=769px) {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+  /*Card Image/Text Row*/
+
+  /*Card Text Column*/
+  .text__card {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    border-radius: var(--space-2);
+    background-color: var(--color-white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    @media (width <=769px) {
+      display: flex;
+      flex-direction: column;
+    }
+    .card__body {
+      color: var(--color-black);
+      padding: var(--space-5);
+      width: 100%;
+    }
+    .card__copy {
+      margin-block: var(--space-4);
+      width: 100%;
+    }
+  }
+  /*Card Text Column*/
+  .image__card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Black overlay with 50% opacity */
+     background:rgba(0,0,0,0.5);
+
+    z-index: -1;
+  }
+
+  .image__card {
+    display: flex;
+    flex-direction: column;
+    background-image: url("https://preview.ibb.co/cuketF/brina_blum_114391.jpg");
+    background-size: cover;
+    background-position: center;
+position: relative;
+    width: 100%;
+    border-radius: var(--space-2);
+    @media (width <=769px) {
+      display: flex;
+      flex-direction: column;
+    }
+    .card__body,
+    .card__title {
+      color: var(--color-white);
+      padding: var(--space-4);
+      width: 100%;
+    }
+    .card__copy {
+      margin-block: var(--space-2);
+    }
+    .card__image {
+      width: 375px;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: var(--space-2) var(--space-2) 0 0;
+      @media (width <=769px) {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--space-3) var(--space-5);
+    border: none;
+    border-radius: var(--space-1);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-bold);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+
+  .primary-btn:hover {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--space-1);
+  }
+}
